@@ -1,5 +1,3 @@
-![LithiumCore](https://raw.githubusercontent.com/Sirexer/SRB2-LithiumCore/refs/heads/main/Graphics/Addon%20Icon/Standard%20HD/LITHIUMCORE_ICONHD_01.png)
-
 # SRB2-LithiumCore
 LithiumCore is an addon for Sonic Robo Blast 2 (SRB2) designed to improve hosting and server management.
 
