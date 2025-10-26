@@ -1,5 +1,5 @@
 # SRB2-LithiumCore
-The ultimate add-on for SRB2 server hosting.
+An add-on for SRB2, consisting of a set of server and client subsystems: account and authorization system (including 2FA/TOTP), progress/configuration saving, flexible menu/interface system (BBCode in MOTD, custom HUD hooks), module/add-on loader, and a bunch of admin tools (banlist, command permissions, console settings, etc.). The add-on contains a large number of graphics/icons and built-in libraries (JSON, QR/TOTP/sha1, etc.).
 
 Everything is written in pure Lua. You only need SRB2 itself to run LithiumCore.
 
