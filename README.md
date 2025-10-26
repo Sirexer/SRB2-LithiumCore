@@ -1,6 +1,8 @@
 # SRB2-LithiumCore
 The ultimate add-on for SRB2 server hosting.
 
+Everything is written in pure Lua. You only need SRB2 itself to run LithiumCore.
+
 # Attribution of third-party components
 
 This project includes code and/or content from the following third-party projects:
