@@ -17,3 +17,6 @@ This project includes code and/or content from the following third-party project
 ## qrencode.lua
 - **Source:** https://github.com/rxi/json.lua
 - **License:** BSD 3-Clause License
+
+## SRB2 unicode fonts
+- **Author:** Ors
