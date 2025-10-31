@@ -1133,7 +1133,7 @@ LC.language["tr"] = {
 	LC_MENU_MOTD_TIP = "Günün mesajını gör.",
 	LC_MENU_VOTING_TIP = "Oylama başlat.",
 	
-	LC_СV_LANGUAGE = "LithCore Dil",
+	LC_CV_LANGUAGE = "LithCore Dil",
 	LC_CV_NETBUFFER = "NetXCMD optimize",
 	LC_CV_SWEARS = "Küfür Sansür",
 	LC_CV_LOADCOLORS = "Otomatik renk yükle",
@@ -1160,7 +1160,7 @@ LC.language["tr"] = {
 	LC_CV_UNREGKICK = "Oyuncu atma listesinden çıkar",
 	LC_CV_VOTECD = "Oy sakinleştirme",
 	
-	LC_СV_LANGUAGE_TIP = "LithiumCore için dil.\nFeothecat tarafından yerelleştirme.",
+	LC_CV_LANGUAGE_TIP = "LithiumCore için dil.\nFeothecat tarafından yerelleştirme.",
 	LC_CV_NETBUFFER_TIP = "\x85".."EXPERIMENTAL\x80"..": BufferCMD’yi her oyun karesine dağıtarak optimize eder. Eğer NetXCMD hataları çok sık oluyorsa bu ayarı etkinleştirebilirsiniz.",
 	LC_CV_SWEARS_TIP = "Küfürleri nasıl işleneceğini değiştirir: engelleme, sansürleme veya izin verme.",
 	LC_CV_LOADCOLORS_TIP = "Eğer bu etkinleştirilirse, sunucuya giriş yaptığınızda otomatik olarak karakter renginizi seçili olanla değiştirir.",

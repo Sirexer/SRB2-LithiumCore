@@ -188,6 +188,7 @@ local t = {
 					return
 				end
 				COM_BufInsertText(consoleplayer, "LC_voting "..vote_name.." "..str_args)
+				print("LC_voting "..vote_name.." "..str_args)
 			end
 			return
 		end
