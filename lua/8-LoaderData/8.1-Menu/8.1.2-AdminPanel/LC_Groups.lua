@@ -138,7 +138,7 @@ local t = {
 				local str_remove = LC.functions.getStringLanguage("LC_GROUP_REMOVE")
 				if LC_menu.nav == 5
 					if CanRemove == true
-						LC.functions.drawString(v, 12, 174, "\x82"..str_remove, V_SNAPTOTOP, "right")
+						LC.functions.drawString(v, 312, 174, "\x82"..str_remove, V_SNAPTOTOP, "right")
 					else
 						LC.functions.drawString(v, 312, 174, "\x85"..str_remove, V_SNAPTOTOP, "right")
 					end
