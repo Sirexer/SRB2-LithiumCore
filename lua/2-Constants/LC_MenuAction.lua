@@ -9,3 +9,5 @@ rawset(_G, "LCMA_ACCEPT",		5)
 rawset(_G, "LCMA_BACK",		6)
 
 return true -- End of File
+
+

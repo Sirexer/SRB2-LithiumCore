@@ -39,7 +39,7 @@ local t = {
 				local name = LC.functions.getStringLanguage(LC.menu.vars[i].name)
 				if LC_menu.nav+1 == i
 					--local name = LC.menu.vars[i].name
-					LC.functions.drawString(v, 136, 30+y, "\x82"..name, V_SNAPTOTOP, "left")
+					LC.functions.drawString(v, 136, 30+y, "\x82"..name, V_SNAPTOTOP, "left", 144)
 					v.drawString(308, 30+y, (tostring("\x82".."<"..LC.menu.vars[i].command.string..">")), V_SNAPTOTOP, "right")
 					if LC.menu.vars[i].description
 						LC_menu.tip = LC.functions.getStringLanguage(LC.menu.vars[i].description)
@@ -47,7 +47,7 @@ local t = {
 						LC_menu.tip = ""
 					end
 				else
-					LC.functions.drawString(v, 136, 30+y, name, V_SNAPTOTOP, "left")
+					LC.functions.drawString(v, 136, 30+y, name, V_SNAPTOTOP, "left", 144)
 					v.drawString(308, 30+y, (tostring(LC.menu.vars[i].command.string)), V_SNAPTOTOP, "right")
 				end
 				y = $ + 10

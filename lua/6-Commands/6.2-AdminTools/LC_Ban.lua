@@ -95,6 +95,77 @@ COM_AddCommand(LC.serverdata.commands["ban"].name, function(player, pname, reaso
 			CONS_Printf(player, "\x82".."WARNING".."\x80"..": The date cannot be earlier than the current date.")
 			return
 		end
+		
+		--[[
+		if unban
+			local day
+			local month
+			local year
+			local hour
+			local minute
+			local IsError = false
+			xpcall(
+				function()
+					local u = unban:lower()
+					day = u:sub(1,2)		u = u:sub(4)
+					month = u:sub(1,2)		u = u:sub(4)
+					year = u:sub(1,2)		u = u:sub(4)
+					if u:len() == 5
+						hour = u:sub(1,2)	u = u:sub(4)
+						minute = u:sub(1,2)	u = u:sub(4)
+					else
+						hour = "00"
+						minute = "00"
+					end
+					year = "20"..year
+					local check = {day, month, year, hour, minute}
+					
+					for i = 1, #check do
+						if tonumber(check[i]) == nil
+						or i == 3 and check[i]:len() != 4
+						or i != 3 and check[i]:len() != 2
+							error("", 0)
+						end
+					end
+				end,
+				function()
+					CONS_Printf(player, "\x82".."WARNING".."\x80"..": Wrong date format: must be \"DD.MM.YY\" or \"DD.MM.YY-HH:MM\".")
+					IsError = true
+				end
+			)
+			if IsError == true then return end
+			local t = {
+				year = year,
+				month = month,
+				day = day,
+				hour = hour,
+				min = minute,
+				sec = "00"
+			}
+			int_time = os.time(t)
+			if int_time == nil
+				int_time = 2147418000
+			elseif int_time < os.time()
+				CONS_Printf(player, "\x82".."WARNING".."\x80"..": It is impossible to set a date less than the present time.")
+				return
+			elseif tonumber(day) > 31 or tonumber(day) < 1
+				CONS_Printf(player, "\x82".."WARNING".."\x80"..": It is impossible to set a date, minimum 1, maximum 31 for the day value.")
+				return
+			elseif tonumber(month) > 12 or tonumber(month) < 1
+				CONS_Printf(player, "\x82".."WARNING".."\x80"..": It is impossible to set a date, minimum 1, maximum 12 for the month value.")
+				return
+			elseif tonumber(year) > 2038 or tonumber(year) < 1970
+				CONS_Printf(player, "\x82".."WARNING".."\x80"..": It is impossible to set a date, minimum "..os.date("%y")..", maximum 38 for the year value.")
+				return
+			elseif tonumber(hour) > 23 or tonumber(hour) < 0
+				CONS_Printf(player, "\x82".."WARNING".."\x80"..": It is impossible to set a date, minimum 0, maximum 23 for the hour value.")
+				return
+			elseif tonumber(minute) > 59 or tonumber(minute) < 0
+				CONS_Printf(player, "\x82".."WARNING".."\x80"..": It is impossible to set a date, minimum 0, maximum 59 for the minute value.")
+				return
+			end
+		end
+		]]
 		local id
 		if LC.localdata.playernum[#player2]
 			id = LC.localdata.playernum[#player2].id

@@ -40,14 +40,14 @@ local t = {
 				if LC_menu.LC_allowcommands and LC_menu.LC_allowcommands[i] and LC_menu.LC_allowcommands[i].command
 					local cmd_name = LC.functions.getStringLanguage(LC_menu.LC_allowcommands[i].command.name)
 					if LC_menu.nav == LC_menu.LC_allowcommands[i].num and LC_menu.category != "main"
-						LC.functions.drawString(v, 136, 30+y, "\x82"..cmd_name, V_SNAPTOTOP, "left")
+						LC.functions.drawString(v, 136, 30+y, "\x82"..cmd_name, V_SNAPTOTOP, "left", 178)
 						if LC_menu.LC_allowcommands[i].command.description
 							LC_menu.tip = LC.functions.getStringLanguage(LC_menu.LC_allowcommands[i].command.description)
 						else
 							LC_menu.tip = ""
 						end
 					else
-						LC.functions.drawString(v, 136, 30+y, cmd_name, V_SNAPTOTOP, "left")
+						LC.functions.drawString(v, 136, 30+y, cmd_name, V_SNAPTOTOP, "left", 178)
 					end
 					y = $ + 10
 				end

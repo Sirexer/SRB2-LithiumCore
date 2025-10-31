@@ -399,17 +399,17 @@ local hooktable = {
 						local signin = LC.functions.getStringLanguage("LC_MENU_SIGNIN")
 						local signup = LC.functions.getStringLanguage("LC_MENU_SIGNUP")
 						if LC_menu.category == "account" and LC_menu.nav == 0
-							LC.functions.drawString(v, 136, 30, signin, V_SNAPTOTOP|colors.sel_map, "left")
+							LC.functions.drawString(v, 136, 30, signin, V_SNAPTOTOP|colors.sel_map, "left", 178)
 							--v.drawString(136, 30, "LOGIN", V_SNAPTOTOP|colors.sel_map, "left")
 						else
-							LC.functions.drawString(v, 136, 30, signin, V_SNAPTOTOP, "left")
+							LC.functions.drawString(v, 136, 30, signin, V_SNAPTOTOP, "left", 178)
 							--v.drawString(136, 30, "LOGIN", V_SNAPTOTOP, "left")
 						end
 						if LC_menu.category == "account" and LC_menu.nav == 1
-							LC.functions.drawString(v, 136, 40, signup, V_SNAPTOTOP|colors.sel_map, "left")
+							LC.functions.drawString(v, 136, 40, signup, V_SNAPTOTOP|colors.sel_map, "left", 178)
 							--v.drawString(136, 40, "CREATE ACCOUNT", V_SNAPTOTOP|colors.sel_map, "left")
 						else
-							LC.functions.drawString(v, 136, 40, signup, V_SNAPTOTOP, "left")
+							LC.functions.drawString(v, 136, 40, signup, V_SNAPTOTOP, "left", 178)
 							--v.drawString(136, 40, "CREATE ACCOUNT", V_SNAPTOTOP, "left")
 						end
 					end
@@ -596,7 +596,7 @@ local hooktable = {
 							if LC.menu.subcat.account and LC.menu.subcat.account[i] and LC.menu.subcat.account[i].name
 								local LANG_NAME = LC.functions.getStringLanguage(LC.menu.subcat.account[i].name)
 								if LC_menu.nav == i-1 and LC_menu.category != "main"
-									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP|colors.sel_map, "left")
+									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP|colors.sel_map, "left", 178)
 									if LC.menu.subcat.account[i].description
 										local LANG_DESC = LC.functions.getStringLanguage(LC.menu.subcat.account[i].description)
 										LC_menu.tip = LANG_DESC
@@ -604,7 +604,7 @@ local hooktable = {
 										LC_menu.tip = ""
 									end
 								else
-									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP, "left")
+									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP, "left", 178)
 								end
 								y = $ + 10
 							end
@@ -647,7 +647,7 @@ local hooktable = {
 							if LC.menu.subcat.player and LC.menu.subcat.player[i] and LC.menu.subcat.player[i].name
 								local LANG_NAME = LC.functions.getStringLanguage(LC.menu.subcat.player[i].name)
 								if LC_menu.nav == i-1 and LC_menu.category != "main"
-									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP|colors.sel_map, "left")
+									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP|colors.sel_map, "left", 178)
 									if LC.menu.subcat.player[i].description
 										local LANG_DESC = LC.functions.getStringLanguage(LC.menu.subcat.player[i].description)
 										LC_menu.tip = LANG_DESC
@@ -655,7 +655,7 @@ local hooktable = {
 										LC_menu.tip = ""
 									end
 								else
-									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP, "left")
+									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP, "left", 178)
 								end
 								y = $ + 10
 							end
@@ -698,7 +698,7 @@ local hooktable = {
 							if LC.menu.subcat.admin and LC.menu.subcat.admin[i] and LC.menu.subcat.admin[i].name
 								local LANG_NAME = LC.functions.getStringLanguage(LC.menu.subcat.admin[i].name)
 								if LC_menu.nav == i-1 and LC_menu.category != "main"
-									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP|colors.sel_map, "left")
+									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP|colors.sel_map, "left", 178)
 									if LC.menu.subcat.admin[i].description
 										local LANG_DESC = LC.functions.getStringLanguage(LC.menu.subcat.admin[i].description)
 										LC_menu.tip = LANG_DESC
@@ -706,7 +706,7 @@ local hooktable = {
 										LC_menu.tip = ""
 									end
 								else
-									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP, "left")
+									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP, "left", 178)
 								end
 								y = $ + 10
 							end
@@ -757,7 +757,7 @@ local hooktable = {
 							if LC.menu.subcat.misc and LC.menu.subcat.misc[i] and LC.menu.subcat.misc[i].name
 								local LANG_NAME = LC.functions.getStringLanguage(LC.menu.subcat.misc[i].name)
 								if LC_menu.nav == i-1 and LC_menu.category != "main"
-									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP|colors.sel_map, "left")
+									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP|colors.sel_map, "left", 178)
 									if LC.menu.subcat.misc[i].description
 										local LANG_DESC = LC.functions.getStringLanguage(LC.menu.subcat.misc[i].description)
 										LC_menu.tip = LANG_DESC
@@ -765,7 +765,7 @@ local hooktable = {
 										LC_menu.tip = ""
 									end
 								else
-									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP, "left")
+									LC.functions.drawString(v, 136, 30+y, LANG_NAME, V_SNAPTOTOP, "left", 178)
 								end
 								y = $ + 10
 							end

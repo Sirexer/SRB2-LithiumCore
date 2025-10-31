@@ -38,7 +38,7 @@ COM_AddCommand(LC.serverdata.commands["flip"].name, function(player, pname)
 		return
 	end
     if pname == nil then
-        CONS_Printf(player, sets.name.." <name/node> to flip the player")
+        CONS_Printf(player, sets.name.." <node> to flip the player")
         return
     end
 	

@@ -3,7 +3,7 @@ freeslot("sfx_qvnow", "sfx_qvfail", "sfx_qvpass")
 
 if not LithiumCore
 	rawset (_G, "LithiumCore", {
-		info = {version = 0, subversion = 21, provisional = "Alpha"},
+		info = {version = 1, subversion = 0, provisional = "Alpha"},
 		vote_types = {}, -- Callvote states
 		commands = {}, -- Commands for console
 		consvars = {}, -- Server Variable commands

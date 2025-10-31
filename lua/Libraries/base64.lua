@@ -78,3 +78,4 @@ function base64.decode(data)
 end
 
 return base64
+

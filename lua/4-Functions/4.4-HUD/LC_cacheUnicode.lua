@@ -2,6 +2,46 @@ local LC = LithiumCore
 
 local cache = {}
 
+--[[
+	Function: LC.functions.cacheUnicode
+	-----------------------------------
+	Converts a UTF-8 string into a cached rendering table for optimized drawing.
+	This function parses each Unicode character, determines its corresponding patch,
+	and stores all rendering data (width, height, and color) in a structured table.
+
+	Arguments:
+		v (video functions)
+			- Video rendering context required for patch caching and validation.
+
+		str (string)
+			- UTF-8 string to be parsed and converted into cached patches.
+
+	Returns:
+		caching (table)
+			- A structured table containing rendering cache data:
+				• caching.width_text  — total horizontal width of the text in pixels.
+				• caching.height_text — maximum character height in pixels.
+				• caching.chars       — array of cached character tables:
+					{
+						patch  = patch reference (or "space"/"newline"),
+						color  = colormap data (if active),
+						width  = patch width,
+						height = patch height
+					}
+
+	Description:
+		This function is designed for Unicode and multi-byte character strings.
+		It automatically handles:
+			- UTF-8 multi-length character parsing (1–5 bytes)
+			- Spaces and newlines
+			- In-text color codes from LC.colormaps
+			- Missing or unsupported symbols (skipped)
+			- Efficient patch caching via v.cachePatch()
+		
+		Use this function when drawing text that contains multilingual or special Unicode symbols.
+		It should be called only once per string to avoid redundant cache generation every frame.
+]]
+
 function LC.functions.cacheUnicode(v, str)
 	-- Video context and string are required
 	if not v or not str then return end

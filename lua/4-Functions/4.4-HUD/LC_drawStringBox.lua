@@ -37,6 +37,62 @@ local colors = {
 	V_INVERTMAP
 }
 
+--[[
+	Function: LC.functions.drawStringBox
+	------------------------------------
+	Draws a block of text (Unicode-capable) with automatic word wrapping.
+	This function splits a cached Unicode string into lines that fit inside a given width,
+	applies alignment, scaling, and renders them line by line.
+
+	Arguments:
+		v (video functions)
+			- Video rendering context used to draw text patches.
+
+		x (fixed_t)
+			- X coordinate of the text block on screen.
+
+		y (fixed_t)
+			- Y coordinate of the text block on screen.
+
+		cache_t (table|string)
+			- Cached Unicode table (from LC.functions.cacheUnicode)
+			  or a string that will be cached automatically.
+
+		flags (integer)
+			- Drawing flags (V_*) that control rendering and colors.
+			  If V_ALLOWLOWERCASE is present, lowercase letters are preserved.
+
+		alignment (string)
+			- Determines text alignment and style keywords:
+				• "left" / "right" / "center"
+				• "fixed" / "fixed-center" / "fixed-right" — disables FU scaling
+				• "small" / "small-center" / "small-right" — half-size text
+				• "small-fixed" variants — combination of both
+				• "thin" — thinner horizontal scaling
+
+		max_width (integer)
+			- Maximum line width in pixels before text wraps.
+			  Words are always wrapped as a whole (never broken in the middle).
+
+	Returns:
+		draw_y (integer)
+			- Final Y position (bottom of the drawn text block), in pixels.
+
+	Description:
+		This function handles multi-line text rendering with proper word wrapping.
+		It automatically:
+			- Splits text into tokens (words, spaces, newlines)
+			- Wraps words across lines without splitting them
+			- Applies per-line alignment ("left", "center", "right")
+			- Draws using scaling modes (small, thin, fixed)
+			- Applies color via LC.colormaps or V_* flags
+			- Calculates proper vertical spacing between lines
+
+		Ideal for chat messages, dialog boxes, tooltips, or UI panels
+		where multi-line and width-constrained text is required.
+]]
+
+
 function LC.functions.drawStringBox(v, x, y, cache_t, flags, alignment, max_width)
 	-- Video context and string are required
 	if not v or not cache_t then return end

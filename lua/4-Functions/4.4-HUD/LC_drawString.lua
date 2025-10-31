@@ -20,7 +20,58 @@ local colors = {
 	V_INVERTMAP
 }
 
-local dash
+--[[
+	Function: LC.functions.drawString
+	---------------------------------
+	Draws a pre-cached Unicode text table or a plain string onto the screen.
+	This function supports scaling, alignment, color mapping, and clipping width.
+
+	Arguments:
+		v (video functions)
+			- Video rendering context used to draw patches.
+
+		x (fixed_t)
+			- X position of the text on screen.
+		
+		y (fixed_t)
+			- Y position of the text on screen.
+
+		cache_t (table|string)
+			- Cached text table returned by LC.functions.cacheUnicode(), or a plain string to be cached automatically.
+
+		flags (integer)
+			- Drawing flags (V_*) for rendering effects and color control.
+			  If V_ALLOWLOWERCASE is included, lowercase letters are preserved.
+
+		alignment (string)
+			- Defines text alignment and style keywords:
+				• "left" (default)
+				• "center"
+				• "right"
+				• "fixed" — disables FU scaling (use raw pixel positions)
+				• "small" — scales text to half size
+				• "thin" — uses thinner horizontal scale for narrow look
+
+		max_width (integer|nil)
+			- Optional maximum width limit in pixels. When text exceeds this width,
+			  an ellipsis symbol (…) is drawn and the text is truncated.
+
+	Returns:
+		width (integer)
+			- The total rendered width of the text in pixels.
+
+	Description:
+		This function is the primary text renderer for LithiumCore’s Unicode system.
+		It automatically:
+			- Retrieves and caches Unicode patches from LC.functions.cacheUnicode
+			- Applies alignment and scaling (small/thin/fixed)
+			- Detects line breaks and spaces efficiently
+			- Applies color maps via LC.colormaps or V_* flags
+			- Clamps text rendering to a maximum width, drawing an ellipsis (…)
+		
+		Use this when you need to display Unicode or multilingual text with
+		full rendering control and high performance.
+]]
 
 function LC.functions.drawString(v, x, y, cache_t, flags, alignment, max_width)
 	-- Video context and string are required
@@ -102,14 +153,13 @@ function LC.functions.drawString(v, x, y, cache_t, flags, alignment, max_width)
 			vscale_c = (vscale/char.height) * 8
 		end
 		
-		if max_width and (max_width-9)*FU < width_text + char.width*hscale_c then
-			for i = 1, 3 do
-				if thin then
-					v.drawStretched(x+width_text, y, hscale_c, vscale_c, v.cachePatch("TNYFN046"), flags, c_color)
-				else
-					v.drawScaled(x+width_text, y, vscale_c, v.cachePatch("TNYFN046"), flags, c_color)
-				end
+		if max_width and (max_width-8)*FU < width_text + char.width*hscale_c then
+			if thin then
+				v.drawStretched(x+width_text, y, hscale_c, vscale_c, v.cachePatch("U+2026"), flags, c_color)
+			else
+				v.drawScaled(x+width_text, y, vscale_c, v.cachePatch("U+2026"), flags, c_color)
 			end
+			width_text = $ + char.width*hscale_c
 			break
 		end
 		
