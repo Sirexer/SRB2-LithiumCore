@@ -20,7 +20,7 @@ This project includes code and/or content from the following third-party project
 - **License:** MIT License
 
 ## qrencode.lua
-- **Source:** https://github.com/rxi/json.lua
+- **Source:** https://speedata.github.io/luaqrcode/docs/qrencode.html
 - **License:** BSD 3-Clause License
 
 ## SRB2 unicode fonts
