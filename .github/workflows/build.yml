@@ -1,13 +1,34 @@
-- name: Create PK3 file
-  run: |
-    short=$(git rev-parse --short HEAD)
-    zip -r LithiumCore.pk3 * -x ".git*" -x ".github/*" -x "output/*"
-    cp LithiumCore.pk3 "LithiumCore_${short}.pk3"
+name: Build PK3
 
-- name: Upload PK3 artifact
-  uses: actions/upload-artifact@v4
-  with:
-    name: LithiumCore
-    path: |
-      LithiumCore.pk3
-      LithiumCore_*.pk3
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build PK3 files
+        run: |
+          # Короткий хеш коммита
+          short=$(git rev-parse --short HEAD)
+
+          # Основной PK3
+          zip -r LithiumCore.pk3 * -x ".git*" -x ".github/*" -x "*.pk3"
+
+          # Версия с хешем
+          cp LithiumCore.pk3 "LithiumCore_${short}.pk3"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: LithiumCore
+          path: |
+            LithiumCore.pk3
+            LithiumCore_*.pk3
