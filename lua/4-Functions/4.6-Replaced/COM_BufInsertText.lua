@@ -28,25 +28,34 @@ local cmd_tick_enabled = false
 -- Important: semicolons inside double quotes are ignored as separators.
 local function split_commands(buffer)
 	local cmds = {}
-	local current = ""
+	local current = {}
 	local in_quotes = false
 
 	for i = 1, #buffer do
 		local c = buffer:sub(i, i)
 		if c == '"' then
 			in_quotes = not in_quotes
+			table.insert(current, c) -- Keep the quotation mark!
 		elseif c == ";" and not in_quotes then
-			if #current > 0 then
-				table.insert(cmds, current:match("^%s*(.-)%s*$"))
-				current = ""
+			-- End of command
+			local line = table.concat(current):match("^%s*(.-)%s*$")
+			if #line > 0 then
+				table.insert(cmds, line)
 			end
+			current = {}
 		else
-			current = current .. c
+			table.insert(current, c)
 		end
 	end
+
+	-- Add the last command, if any
 	if #current > 0 then
-		table.insert(cmds, current:match("^%s*(.-)%s*$"))
+		local line = table.concat(current):match("^%s*(.-)%s*$")
+		if #line > 0 then
+			table.insert(cmds, line)
+		end
 	end
+
 	return cmds
 end
 
