@@ -14,21 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build PK3 files
+      - name: Build PK3
         run: |
-          # Короткий хеш коммита
-          short=$(git rev-parse --short HEAD)
-
-          # Основной PK3
+          # Создаём чистый PK3 (один файл, без вложенных папок)
           zip -r LithiumCore.pk3 * -x ".git*" -x ".github/*" -x "*.pk3"
 
-          # Версия с хешем
-          cp LithiumCore.pk3 "LithiumCore_${short}.pk3"
-
-      - name: Upload artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: LithiumCore
-          path: |
-            LithiumCore.pk3
-            LithiumCore_*.pk3
+          path: LithiumCore.pk3
