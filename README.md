@@ -3,6 +3,10 @@
 [![latest release](https://github.com/Sirexer/SRB2-LithiumCore/blob/main/.github/buttons/release.png?raw=true)](https://github.com/Sirexer/SRB2-LithiumCore/releases/download/alpha/L_LithiumCore_V1.1-alpha.pk3)
 [![compiled](https://github.com/Sirexer/SRB2-LithiumCore/blob/main/.github/buttons/download_compiled.png?raw=true)](https://nightly.link/Sirexer/SRB2-LithiumCore/workflows/build.yml/main/LithiumCore.zip)
 
+![SRB2_22X](https://github.com/Sirexer/SRB2-LithiumCore/blob/main/.github/buttons/SRB2_22X.png?raw=true)
+![SRB2_KART](https://github.com/Sirexer/SRB2-LithiumCore/blob/main/.github/buttons/SRB2_KART.png?raw=true)
+![SRB2_DRRR](https://github.com/Sirexer/SRB2-LithiumCore/blob/main/.github/buttons/DRRR.png?raw=true)
+
 LithiumCore is an addon for Sonic Robo Blast 2 (SRB2) designed to improve hosting and server management.
 
 # Addon description 
