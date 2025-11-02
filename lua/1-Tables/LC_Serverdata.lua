@@ -1,3 +1,5 @@
+local os_time = (os and os.time()) or 0
+
 LithiumCore.serverdata = { -- table of serverdata
 	//name = "SRB2 Server", -- Server name, it is set once
 	//serverfolder = "client/LC/ServerHost/SRB2 Server/", -- Server configuration folder
@@ -8,7 +10,7 @@ LithiumCore.serverdata = { -- table of serverdata
 	loadstate = true, -- Return the map and emeralds, after starting the server
 	savestate = false, -- Save the map and emeralds
 	servertime = 0, -- How long does the server run
-	ostime = os.time(),
+	ostime = os_time,
 	tps = 35,
 	countplayers = 0, -- How many players are there on the server
 	countbots = 0,
