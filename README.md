@@ -1,6 +1,6 @@
 # SRB2-LithiumCore
 
-[![latest release](https://github.com/Sirexer/SRB2-LithiumCore/blob/main/.github/buttons/release.png?raw=true)](https://github.com/Sirexer/SRB2-LithiumCore/releases/download/alpha/L_LithiumCore_V1.2-alpha.pk3)
+[![latest release](https://github.com/Sirexer/SRB2-LithiumCore/blob/main/.github/buttons/release.png?raw=true)](https://github.com/Sirexer/SRB2-LithiumCore/releases/download/LithiumCore_Release_v1.2alpha/L_LithiumCore_V1.2-alpha.pk3)
 [![compiled](https://github.com/Sirexer/SRB2-LithiumCore/blob/main/.github/buttons/download_compiled.png?raw=true)](https://nightly.link/Sirexer/SRB2-LithiumCore/workflows/build.yml/main/LithiumCore.zip)
 
 ![SRB2_22X](https://github.com/Sirexer/SRB2-LithiumCore/blob/main/.github/buttons/SRB2_22X.png?raw=true)
