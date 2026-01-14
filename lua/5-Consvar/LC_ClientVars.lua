@@ -4,7 +4,7 @@ LC.client_consvars["LC_language"] = CV_RegisterVar({
 	name = "LC_language",
 	defaultvalue = 0,
 	flags = CV_SAVE,
-	PossibleValue = {en = 0, ru = 1, tr = 2, es = 3}}
+	PossibleValue = {en = 0, ru = 1, ua = 3, tr = 3, es = 4, de = 5, pl = 6, pt = 7}}
 )
 
 LC.client_consvars["LC_optimisebuffercmd"] = CV_RegisterVar({
