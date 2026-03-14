@@ -14,7 +14,7 @@ local cmd_buffer = {}
 -- Tick tracking and buffer length accounting
 -- last_tick: last tick value used to detect tick changes
 -- cmd_length: accumulated length of commands executed in the current tick
-local last_tick = -1
+local last_tick = 0
 local cmd_length = 0
 
 -- Maximum number of characters to process per tick (to avoid very long single-frame buffers)
@@ -22,17 +22,6 @@ local CMD_MAX_BUFFER_SIZE = 220
 local key = LC.functions.GetRandomPassword("L", 4)
 
 local cmd_tick_enabled = false
-
-local function current_tick(player)
-	if leveltime ~= nil then
-		return leveltime
-	end
-	return (player and player.jointime) or 0
-end
-
-local function queue_command(cmd)
-	cmd_buffer[#cmd_buffer + 1] = cmd
-end
 
 -- Helper: split input buffer into individual command lines, respecting quoted strings.
 -- Example: 'cmd1 arg1; cmd2 "quoted ; arg"; cmd3' -> { "cmd1 arg1", "cmd2 \"quoted ; arg\"", "cmd3" }
@@ -92,12 +81,12 @@ COM_BufInsertText = function(player, buffer)
 	if LC.client_consvars["LC_optimisebuffercmd"].value == 0 or isdedicatedserver or not multiplayer or not player then
 		return original_COM_BufInsertText(player, buffer)
 	end
-
+	
 	-- Validate buffer type
 	if type(buffer) ~= "string" or buffer == "" then return end
-
+	
 	local cmds = {}
-
+	
 	-- Split input into individual commands
 	local lines = split_commands(buffer)
 	for _, line in ipairs(lines) do
@@ -111,26 +100,26 @@ COM_BufInsertText = function(player, buffer)
 			)
 		end
 	end
-
-	local tick = current_tick(player)
-	if tick ~= last_tick then
+	
+	local current_tick = player.jointime or 0
+	if current_tick ~= last_tick then
 		cmd_length = 0
-		last_tick = tick
+		last_tick = current_tick
 	end
-
+	
 	local execute = true
 	for _, v in ipairs(cmds) do
 		local cmd = v.cmd
 		local args = v.args
 		local parsed = (v.args and v.cmd.." "..v.args) or v.cmd
-
+		
 		-- Skip if this command is not transmitted over the network; it will never cause NetXCMD error
 		-- LC.CMD table holds command flags — COM_LOCAL flag means command is local-only.
 		if LC.CMD[cmd] == nil or (LC.CMD[cmd] & COM_LOCAL) then
 			original_COM_BufInsertText(player, parsed)
 			continue
 		end
-
+		
 		-- If the command is longer than CMD_MAX_BUFFER_SIZE, skip it and issue a warning.
 		-- This protects against single commands that are absurdly long and would never be safe
 		-- to send in one frame.
@@ -139,7 +128,7 @@ COM_BufInsertText = function(player, buffer)
 				"\x82".."WARNING\x80"..": Command length too long, can't be executed")
 			continue
 		end
-
+		
 		--[[
 		print("Buffer length: "..cmd_length)
 		print("CMD: "..parsed)
@@ -147,27 +136,27 @@ COM_BufInsertText = function(player, buffer)
 		]]
 		-- Buffer network commands for processing on ticks to avoid NetXCMD errors.
 		-- If the accumulated command length would exceed the per-tick cap, defer to queue.
-		if (cmd_length > 0 and cmd_length + #parsed >= CMD_MAX_BUFFER_SIZE) or execute == false then
+		if cmd_length > 0 and cmd_length + #parsed >= CMD_MAX_BUFFER_SIZE or execute == false then
 			execute = false
-			queue_command(parsed)
+			table.insert(cmd_buffer, parsed)
 			--print("Sending to buffer...")
 			continue
 		end
 		--[[
 		print("Executing...")
 		]]
-
+		
 		-- Append the command text into the command buffer for execution.
 		-- Here we use COM_BufAddText to append the text to the console buffer so the engine
 		-- will process it in the normal command dispatch flow. This preserves expected engine behavior.
 		cmd_length = $ + #parsed
-		COM_BufAddText(player, parsed.."\n")
+		COM_BufAddText(player, parsed)
 	end
-
+	
 	-- Start the command handler if it was stopped
 	if not cmd_tick_enabled and cmd_buffer[1] then
 		key = LC.functions.GetRandomPassword("L", 4)
-		COM_BufAddText(player, "CMD_THINKER "..key.."\n")
+		COM_BufAddText(player, "CMD_THINKER "..key)
 		cmd_tick_enabled = true
 	end
 end
@@ -180,21 +169,21 @@ COM_AddCommand("CMD_RUN", function(player, arg)
 	if not cmd_buffer[1] then return end
 	-- Respect the optimization cvar.
 	if LC.client_consvars["LC_optimisebuffercmd"].value == 0 then return end
-
+	
 	-- Reset accumulated command length only when a new game tick is detected.
-	-- Tick source comes from current_tick(), preferring leveltime when available.
-	-- The goal is to reset
+	-- player.jointime is used here as a tick-like counter; if your environment provides
+	-- a global 'leveltime' or similar, that can be used instead. The goal is to reset
 	-- cmd_length once per engine tick so multiple CMD_RUN invocations inside the same
 	-- tick don't reset the accounting prematurely.
-	local tick = current_tick(player)
-	if tick ~= last_tick then
+	local current_tick = player.jointime or 0
+	if current_tick ~= last_tick then
 		cmd_length = 0
-		last_tick = tick
+		last_tick = current_tick
 	end
 
 	while cmd_buffer[1] do
 		local cmdstr = cmd_buffer[1]
-
+		
 		-- Check accumulated buffer length and avoid exceeding CMD_MAX_BUFFER_SIZE in a single tick.
 		if cmd_length > 0 and cmd_length + #cmdstr >= CMD_MAX_BUFFER_SIZE then
 			break
@@ -206,7 +195,7 @@ COM_AddCommand("CMD_RUN", function(player, arg)
 		-- means this function will not directly call COM_BufInsertText, but the engine
 		-- will call it in the normal processing flow.
 		cmd_length = $ + #cmdstr
-		COM_BufAddText(player, cmdstr.."\n")
+		COM_BufAddText(player, cmdstr)
 
 		-- Remove the processed command from the queue.
 		table.remove(cmd_buffer, 1)
@@ -226,15 +215,15 @@ COM_AddCommand("CMD_THINKER", function(player, arg)
 	if not multiplayer or not netgame or LC.client_consvars["LC_optimisebuffercmd"].value == 0 then
 		return
 	end
-
+	
 	cmd_tick_enabled = true
-
+	
 	-- If there are pending buffered commands, schedule CMD_RUN to continue processing next tick.
-	COM_BufAddText(player, "CMD_RUN\n")
-
+	COM_BufAddText(player, "CMD_RUN")
+	
 	-- Re-schedule this thinker so it runs every tick as well.
 	key = LC.functions.GetRandomPassword("L", 4)
-	COM_BufAddText(player, "CMD_THINKER "..key.."\n")
+	COM_BufAddText(player, "CMD_THINKER "..key)
 	LC.localdata.cmd_buffer = cmd_length
 end)
 
