@@ -13,7 +13,7 @@ local LUA_FILES = { -- List of all LithCore lua files
 			{name = "LC_Controls.lua", loaded = nil},
 			{name = "LC_Gametypes.lua", loaded = nil},
 			{name = "LC_Phrases.lua", loaded = nil},
-			{name = "LC_Macrolist.lua", loaded = nil},
+			{name = "LC_MacroList.lua", loaded = nil},
 			{name = "LC_Hooks.lua", loaded = nil},
 			{name = "LC_Menu.lua", loaded = nil},
 			{name = "LC_Colormaps.lua", loaded = nil},
@@ -326,7 +326,7 @@ local LUA_FILES = { -- List of all LithCore lua files
 	},
 	
 	{
-		dir = "7-Hooks/7.7-BanChars/",
+		dir = "7-Hooks/7.7-Banchars/",
 		files = {
 			{name = "LC_ThinkFrame.lua", loaded = nil}
 		}
