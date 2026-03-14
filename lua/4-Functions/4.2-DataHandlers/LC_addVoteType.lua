@@ -118,7 +118,7 @@ local LC = LithiumCore
 
 LC.functions.addVoteType = function(tabledata)
 	if type(tabledata) != "table"
-		print("\x82".."WARNING".."\x80"..": Expacted table got "..type(tabledata))
+		print("\x82".."WARNING".."\x80"..": Expected table got "..type(tabledata))
 		return
 	end
 	local IsError = false
