@@ -1,5 +1,7 @@
 local LC = LithiumCore
 
+local cv_color = CV_FindVar("color")
+
 local hooktable = {
 	name = "LC.Skincolor",
 	type = "PlayerQuit",

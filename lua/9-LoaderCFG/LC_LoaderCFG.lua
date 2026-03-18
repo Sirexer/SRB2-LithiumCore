@@ -37,7 +37,7 @@ addHook("PreThinkFrame", do
 	-- Saving and Loading ClientCvars
 	if close_game != false and multiplayer and server == consoleplayer
 		if close_game > 0
-			if (leveltime % TICRATE) / 34
+			if leveltime % TICRATE == 0
 				chatprintf(server, "\x85".."ERROR\x80"..": The server was started after playing on another server. LithCore will not work and the game will close after "..close_game/TICRATE.." seconds.")
 			end
 			close_game = $ - 1
@@ -46,12 +46,14 @@ addHook("PreThinkFrame", do
 		end
 		return
 	end
-	if set_client_cvars == true -- set values ​​for console vars from file
-		for k, v in pairs(vars.clientcfg_data) do
-			if LC.client_consvars[k]
-			and type(LC.client_consvars[k]) == "userdata"
-			and userdataType(LC.client_consvars[k]) == "consvar_t"
-				CV_StealthSet(LC.client_consvars[k], vars.clientcfg_data[k])
+	if set_client_cvars == true then -- set values ​​for console vars from file
+		if vars.clientcfg_data then
+			for k, v in pairs(vars.clientcfg_data) do
+				if LC.client_consvars[k]
+				and type(LC.client_consvars[k]) == "userdata"
+				and userdataType(LC.client_consvars[k]) == "consvar_t"
+					CV_StealthSet(LC.client_consvars[k], vars.clientcfg_data[k])
+				end
 			end
 		end
 		set_client_cvars = false
@@ -132,10 +134,13 @@ addHook("PreThinkFrame", do
 )
 		modmessage = false
 	end
-	if (leveltime % TICRATE*10) / TICRATE
+	if leveltime % (TICRATE * 10) == 0
 		if not commands_data
 			local commands_file = io.openlocal(LC.serverdata.folder.."/commandperms.cfg", "r")
-			commands_data = json.decode( commands_file:read("*a") )
+			if commands_file then
+				commands_data = json.decode( commands_file:read("*a") )
+				commands_file:close()
+			end
 		elseif commands_data
 			local scd = LC.serverdata.commands
 			for k, v in pairs(scd) do
@@ -159,7 +164,7 @@ addHook("PreThinkFrame", do
 		end
 		set_server_cvars = false
 	elseif vars.servercfg_data -- Save Server console vars if they have been changed
-		if (leveltime % TICRATE) / 34
+		if leveltime % TICRATE == 0 then
 			local save_conscvars = false
 			for k, v in pairs(LC.consvars) do
 				if vars.servercfg_data[k] != nil

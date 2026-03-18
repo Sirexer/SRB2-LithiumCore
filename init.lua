@@ -95,7 +95,8 @@ local LUA_FILES = { -- List of all LithCore lua files
 			{name = "LC_decryptData.lua", loaded = nil},
 			{name = "LC_verifyCode.lua", loaded = nil},
 			{name = "LC_addVoteType.lua", loaded = nil},
-			{name = "LC_addActionTab.lua", loaded = nil}
+			{name = "LC_addActionTab.lua", loaded = nil},
+			{name = "LC_addTextLanguage.lua", loaded = nil}
 		}
 	},
 	

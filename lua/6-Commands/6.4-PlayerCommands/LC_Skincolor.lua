@@ -21,6 +21,8 @@ local colormaps = {
 	{name = "Invert", value = V_INVERTMAP}
 }
 
+local cv_color = CV_FindVar("color")
+
 local sc_keys = {"name", "ramp", "invcolor", "invshade"}
 
 COM_AddCommand("LC_sendcolor", function(player, ...)
@@ -76,7 +78,7 @@ COM_AddCommand("LC_sendcolor", function(player, ...)
 				and player.realmo and player.realmo.valid
 					player.realmo.color = _G["SKINCOLOR_LCSEND"..node]
 				end
-				local cv_color = CV_FindVar("color")
+				
 				if player == consoleplayer then CV_StealthSet(cv_color, skincolors[ _G["SKINCOLOR_LCSEND"..node] ].name) end
 				if flags.nosave != true
 					LC.functions.Skincolor(player, "save", player.LC_sendcolor)
