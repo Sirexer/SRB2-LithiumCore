@@ -2,8 +2,6 @@ local LC = LithiumCore
 
 local json = json //LC_require "json.lua"
 
-local cv_color = CV_FindVar("color")
-
 local hooktable = {
 	name = "LC.Skincolor",
 	type = "GameQuit",
@@ -35,7 +33,11 @@ local hooktable = {
 			}
 		end
 		
-		CV_StealthSet(cv_color, SKINCOLOR_BLUE)
+		local cv_color = CV_FindVar("color")
+		
+		if cv_color then
+			CV_StealthSet(cv_color, SKINCOLOR_BLUE)
+		end
 		
 		LC.localdata.sendcolor = false
 	end

@@ -662,22 +662,3 @@ COM_AddCommand("LC_test", function(player, path, arg)
 	end
 end, 1)
 
--- Just Test Commands
-
-COM_AddCommand("LC_addbot", function(player, name, skin, color)
-	local n = LC.functions.GetRandomPassword()
-	local s = P_RandomRange(0, #skins-1)
-	local c = P_RandomRange(1, #skincolors-1)
-	if name then n = name end
-	if tonumber(skin) != nil and tonumber(skin) < #skins then s = tonumber(skin) end
-	if tonumber(color) and tonumber(color) < #skincolors then c = tonumber(color) end
-	local bot = G_AddPlayer(skins[s].name, c, n, 0)
-	//bot.botleader = player
-end, 1)
-
-COM_AddCommand("LC_kickall", function(player)
-	for p in players.iterate do
-		if player == p then continue end
-		COM_BufInsertText(player, "kick "..#p)
-	end
-end, 1)

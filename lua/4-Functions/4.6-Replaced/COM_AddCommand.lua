@@ -43,6 +43,7 @@ COM_AddCommand = function(...)
 					end
 				end
 			end
+			/*
 			print(player.name.." executed command \""..name.."\" "..str_args)
 		
 			if DiscordBot and DiscordBot.Data and DiscordBot.Data.log != nil
@@ -55,6 +56,7 @@ COM_AddCommand = function(...)
 				end
 				DiscordBot.Data.log = DiscordBot.Data.log..formated.."\n"
 			end
+			*/
 		end
 	end
 	
