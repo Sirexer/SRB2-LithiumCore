@@ -3,7 +3,7 @@ local LC = LithiumCore
 local SaveTable = {
 	function(action, datatable, player) -- srb2data(lives, scores, shield)
 		if not action and not datatable and not player then return end
-		if not G_CoopGametype() then return end
+		if gametype ~= GT_COOP then return end
 		if string.lower(action) == "load"
 			if datatable.score then player.score = datatable.score end
 			if datatable.lives then player.lives = datatable.lives end
