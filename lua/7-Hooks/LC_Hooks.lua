@@ -139,6 +139,8 @@ LC.replaced_functions.addHook("PreThinkFrame", function() -- PlayerThink
 		if toggle == true
 			local first = getTimeMicros()
 			for player in players.iterate do
+				if not player or not player.valid then continue end
+				
 				--if not player or not player.valid then continue end
 				LC.Hooks["PlayerThink"][h].func(player)
 			end

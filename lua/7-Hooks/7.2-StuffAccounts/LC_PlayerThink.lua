@@ -53,6 +53,7 @@ local hooktable = {
 	toggle = true,
 	TimeMicros = 0,
 	func = function(player)
+	
 		-- A bot cannot have an account, so skip it
 		if player.is_bot then return end
 	

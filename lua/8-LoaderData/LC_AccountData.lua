@@ -28,7 +28,7 @@ local SaveTable = {
 				end
 			end
 			if datatable.silence
-				player.cantspeak = silence + TICRATE*60
+				player.cantspeak = datatable.silence + TICRATE*60
 			end
 			if datatable.timeplayed != nil
 				player.LC_timeplayed = {}
