@@ -125,6 +125,8 @@ local hooktable = {
 						end
 					end
 					io.open(path, "r", function(f)
+						if not player or not player.valid then return end
+						
 						if f then
 							local data = f:read("*a")
 							LC.accounts.loaded[player.stuffname] = json.decode(data)

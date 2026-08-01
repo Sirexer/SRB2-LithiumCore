@@ -11,10 +11,10 @@ LC.functions.SaveLoadOtherStuff = function(stuff, player, sl)
 			stuff.LC_timeplayed = player.LC_timeplayed
 		end
 		-- Team
-		if G_GametypeHasTeams() then stuff.team = player.ctfteam end
+		if gamestate == GS_LEVEL and G_GametypeHasTeams() then stuff.team = player.ctfteam end
 		-- Spectator
 		stuff.spectator = player.spectator
-		if player.spectator == true then return end
+		if gamestate == GS_LEVEL and player.spectator == true then return end
 		-- Player completed the level
 		if (player.pflags & PF_FINISHED) and player.isafk != true and player.afk != true
 			stuff.fineshed = PF_FINISHED
@@ -24,7 +24,7 @@ LC.functions.SaveLoadOtherStuff = function(stuff, player, sl)
 			stuff.completiontime = player.completiontime
 		end
 		-- Star post
-		if G_PlatformGametype()
+		if gamestate == GS_LEVEL and G_PlatformGametype()
 			if player.starpostnum != 0
 				stuff.starposted = true
 				stuff.starpostx = player.starpostx
@@ -36,37 +36,41 @@ LC.functions.SaveLoadOtherStuff = function(stuff, player, sl)
 				stuff.starpostscale = player.starpostscale
 			end
 		end
+		
 		-- Score
 		stuff.score = player.score
-		-- Shield
-		stuff.shield = player.powers[pw_shield]
-		-- Rings
-		stuff.rings = player.rings
-		-- Lives
-		stuff.lives = player.lives
-		-- Invincibility
-		stuff.invincibility = player.powers[pw_invulnerability]
-		-- Super Shoes
-		stuff.speed = player.powers[pw_sneakers]
-		-- Weapon rings
-		stuff.weapons = player.ringweapons
-		stuff.infinity = player.powers[pw_infinityring]
-		stuff.automatic = player.powers[pw_automaticring]
-		stuff.bounce = player.powers[pw_bouncering]
-		stuff.scatter = player.powers[pw_scatterring]
-		stuff.grenade = player.powers[pw_grenadering]
-		stuff.explosion = player.powers[pw_explosionring]
-		stuff.rail = player.powers[pw_railring]
-		-- Times hit
-		stuff.timeshit = player.timeshit
-		-- Competition
-		if gametype == GT_COMPETITION
-			stuff.numboxes = player.numboxes
-			stuff.totalring = player.totalring
-			stuff.realtime = player.realtime
+			
+		if gamestate == GS_LEVEL then
+			-- Shield
+			stuff.shield = player.powers[pw_shield]
+			-- Rings
+			stuff.rings = player.rings
+			-- Lives
+			stuff.lives = player.lives
+			-- Invincibility
+			stuff.invincibility = player.powers[pw_invulnerability]
+			-- Super Shoes
+			stuff.speed = player.powers[pw_sneakers]
+			-- Weapon rings
+			stuff.weapons = player.ringweapons
+			stuff.infinity = player.powers[pw_infinityring]
+			stuff.automatic = player.powers[pw_automaticring]
+			stuff.bounce = player.powers[pw_bouncering]
+			stuff.scatter = player.powers[pw_scatterring]
+			stuff.grenade = player.powers[pw_grenadering]
+			stuff.explosion = player.powers[pw_explosionring]
+			stuff.rail = player.powers[pw_railring]
+			-- Times hit
+			stuff.timeshit = player.timeshit
+			-- Competition
+			if gametype == GT_COMPETITION
+				stuff.numboxes = player.numboxes
+				stuff.totalring = player.totalring
+				stuff.realtime = player.realtime
+			end
+			-- Laps
+			if gametype == GT_RACE then stuff.laps = player.laps end
 		end
-		-- Laps
-		if gametype == GT_RACE then stuff.laps = player.laps end
 	elseif sl == "load"
 		-- Silence
 		if stuff.cantspeak
@@ -77,7 +81,7 @@ LC.functions.SaveLoadOtherStuff = function(stuff, player, sl)
 			player.LC_timeplayed = stuff.LC_timeplayed
 		end
 		-- Team
-		if G_GametypeHasTeams() then player.ctfteam = stuff.team end
+		if gamestate == GS_LEVEL and G_GametypeHasTeams() then player.ctfteam = stuff.team end
 		-- Spectator
 		if player.spectator == true and stuff.spectator == false
 			player.spectator = false
@@ -94,7 +98,7 @@ LC.functions.SaveLoadOtherStuff = function(stuff, player, sl)
 			player.completiontime = stuff.completiontime
 		end
 		-- Star post
-		if G_PlatformGametype()
+		if gamestate == GS_LEVEL and G_PlatformGametype()
 			if stuff.starposted == true
 				player.starpostx = stuff.starpostx
 				player.starposty = stuff.starposty
@@ -110,36 +114,38 @@ LC.functions.SaveLoadOtherStuff = function(stuff, player, sl)
 		end
 		-- Score
 		player.score = stuff.score
-		-- Shield
-		player.powers[pw_shield] = stuff.shield
-		P_SpawnShieldOrb(player)
-		-- Rings
-		player.rings = stuff.rings
-		-- Lives
-		player.lives = stuff.lives
-		-- Invincibility
-		player.powers[pw_invulnerability] = $ + stuff.invincibility
-		-- Super Shoes
-		player.powers[pw_sneakers] = $ + stuff.speed
-		-- Weapons
-		player.ringweapons = $ | stuff.weapons
-		player.powers[pw_infinityring] = $ + stuff.infinity
-		player.powers[pw_automaticring] = $ + stuff.automatic
-		player.powers[pw_bouncering] = $ + stuff.bounce
-		player.powers[pw_scatterring] = $ + stuff.scatter
-		player.powers[pw_grenadering] = $ + stuff.grenade
-		player.powers[pw_explosionring] = $ + stuff.explosion
-		player.powers[pw_railring] = $ + stuff.rail
-		-- Times hit
-		player.timeshit = stuff.timeshit
-		-- Competition
-		if gametype == GT_COMPETITION
-			player.numboxes = stuff.numboxes
-			player.totalring = stuff.totalring
-			player.realtime = stuff.realtime
+		if gamestate == GS_LEVEL then
+			-- Shield
+			player.powers[pw_shield] = stuff.shield
+			P_SpawnShieldOrb(player)
+			-- Rings
+			player.rings = stuff.rings
+			-- Lives
+			player.lives = stuff.lives
+			-- Invincibility
+			player.powers[pw_invulnerability] = $ + stuff.invincibility
+			-- Super Shoes
+			player.powers[pw_sneakers] = $ + stuff.speed
+			-- Weapons
+			player.ringweapons = $ | stuff.weapons
+			player.powers[pw_infinityring] = $ + stuff.infinity
+			player.powers[pw_automaticring] = $ + stuff.automatic
+			player.powers[pw_bouncering] = $ + stuff.bounce
+			player.powers[pw_scatterring] = $ + stuff.scatter
+			player.powers[pw_grenadering] = $ + stuff.grenade
+			player.powers[pw_explosionring] = $ + stuff.explosion
+			player.powers[pw_railring] = $ + stuff.rail
+			-- Times hit
+			player.timeshit = stuff.timeshit
+			-- Competition
+			if gametype == GT_COMPETITION
+				player.numboxes = stuff.numboxes
+				player.totalring = stuff.totalring
+				player.realtime = stuff.realtime
+			end
+			-- Laps
+			if gametype == GT_RACE then player.laps = stuff.laps end
 		end
-		-- Laps
-		if gametype == GT_RACE then player.laps = stuff.laps end
 	end
 end
 
